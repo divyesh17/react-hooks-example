@@ -31,3 +31,42 @@
     transform: rotate(360deg);
   }
 }
+
+.articleContainer {
+  display: grid;
+  padding: 4rem;
+  row-gap: 1rem;
+}
+
+.articleSearch {
+  column-gap: 1rem;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+}
+
+.queryInputBox {
+  border: 1px solid;
+  border-radius: 4px;
+  font-size: 1rem;
+  padding: .4rem;
+}
+
+.searchButton {
+  font-size: 1rem;
+}
+
+.summaryClass {
+
+}
+
+.loader {
+  align-items: center;
+  display: flex;
+  height: 20rem;
+  justify-content: center;  
+}
+
+.loadingGif {
+  width: 4rem;
+  height: 4rem;
+}

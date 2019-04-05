@@ -1,76 +1,46 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import loadingGif from './loader.gif';
 
-const articleApiReducer = (state = {}, action) => {
-  const { url, summary, errMsg } = action.payload || {};
-
-  switch(action.type) {
-    case 'FETCH_INIT':
-      return {
-        ...state,
-        isLoading: true,
-        errMsg: '',
-      }
-    case 'FETCH_SUCCESS':
-      return {
-        ...state,
-        summary,
-        isLoading: false,
-      }
-    case 'FETCH_FAIL':
-      return {
-        ...state,
-        isLoading: false,
-        errMsg,
-      }
-    case 'SET_URL':
-      return {
-        ...state,
-        url,
-      }
-    default:
-      return state;
-  }
-};
-
 const useArticleAPI = initState => {
-  const [state, dispatch] = useReducer(articleApiReducer, initState);
+  const [state, setState] = useState(initState);
   const { url } = state;
 
   useEffect(() => {
     const fetchSummary = async () => {
-      dispatch({ type: 'FETCH_INIT' });
+      setState(prevState => ({
+        ...prevState,
+        isLoading: true,
+        errMsg: '',
+      }));
 
       try {
         const result = await fetch(url);
         const { extract: summary } = await result.json();
 
-        dispatch({
-          type: 'FETCH_SUCCESS',
-          payload: {
-            summary,
-          }
-        });
+        setState(prevState => ({
+          ...prevState,
+          summary,
+          isLoading: false,
+        }));
       } catch (e) {
-        dispatch({
-          type: 'FETCH_FAILURE',
-          payload: {
-            errMsg: e.message,
-          }
-        });
+        setState(prevState => ({
+          ...prevState,
+          isLoading: false,
+          errMsg: e.message,
+        }));
       }
     };
 
     fetchSummary();
   }, [url]);
 
-  return [state, dispatch];
+  return [state, setState];
 };
 
 const App = () => {
   const [query, setQuery] = useState('india');
-  const [articleDetails, dispatch] = useArticleAPI({
+  const [articleDetails, setArticleDetails] = useArticleAPI({
     isLoading: false,
     errMsg: '',
     summary: '',
@@ -79,12 +49,10 @@ const App = () => {
   const { isLoading, errMsg, summary } = articleDetails;
 
   const handleQueryChange = e => setQuery(e.target.value);
-  const handleSearch = () => dispatch({
-    type: 'SET_URL',
-    payload: {
-      url: `https://en.wikipedia.org/api/rest_v1/page/summary/${query}`,
-    }
-  });
+  const handleSearch = () => setArticleDetails(prevState => ({ 
+    ...prevState,
+    url: `https://en.wikipedia.org/api/rest_v1/page/summary/${query}`,
+  }));
 
   return (
     <div className="articleContainer">
