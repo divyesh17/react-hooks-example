@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import './App.css';
-import loadingGif from './loader.gif';
+import '../App.css';
+import loadingGif from '../loader.gif';
 
 const App = () => {
   const [summary, setSummary] = useState('');

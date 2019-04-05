@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useReducer } from 'react';
-import './App.css';
-import loadingGif from './loader.gif';
+import '../App.css';
+import loadingGif from '../loader.gif';
 
 const articleApiReducer = (state = {}, action) => {
   const { url, summary, errMsg } = action.payload || {};
