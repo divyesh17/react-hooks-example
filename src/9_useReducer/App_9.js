@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useReducer } from 'react';
-import '../App.css';
-import loadingGif from '../loader.gif';
+import './App.css';
+import loadingGif from './loader.gif';
 
 const articleApiReducer = (state = {}, action) => {
   const { url, summary, errMsg } = action.payload || {};
@@ -18,7 +18,7 @@ const articleApiReducer = (state = {}, action) => {
         summary,
         isLoading: false,
       }
-    case 'FETCH_FAIL':
+    case 'FETCH_FAILURE':
       return {
         ...state,
         isLoading: false,
@@ -44,19 +44,20 @@ const useArticleAPI = initState => {
 
       try {
         const result = await fetch(url);
-        const { extract: summary } = await result.json();
-
-        dispatch({
-          type: 'FETCH_SUCCESS',
-          payload: {
-            summary,
-          }
-        });
+        if (result.ok) { 
+          const { extract: summary } = await result.json();
+          dispatch({
+            type: 'FETCH_SUCCESS',
+            payload: {
+              summary,
+            }
+          });
+        } else throw new Error();
       } catch (e) {
         dispatch({
           type: 'FETCH_FAILURE',
           payload: {
-            errMsg: e.message,
+            errMsg: e.message || 'Something went wrong. Please try again.',
           }
         });
       }
