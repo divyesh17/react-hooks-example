@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../App.css';
+import '../assets/App.css';
 
 const App = () => {
   const [summary, setSummary] = useState('');
@@ -29,6 +29,6 @@ const App = () => {
       <span className="summaryClass">{summary}</span>
     </div>
   );
-}
+};
 
 export default App;

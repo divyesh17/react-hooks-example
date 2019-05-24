@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import '../App.css';
-import loadingGif from '../loader.gif';
+import '../assets/App.css';
+import loadingGif from '../assets/loader.gif';
 
 const App = () => {
   const [summary, setSummary] = useState('');
@@ -23,7 +23,7 @@ const App = () => {
   }, [search]);
 
   const handleQueryChange = e => setQuery(e.target.value);
-  const handleSearch = () => setSearch(query)
+  const handleSearch = () => setSearch(query);
 
   return (
     <div className="articleContainer">
@@ -53,6 +53,6 @@ const App = () => {
       }
     </div>
   );
-}
+};
 
 export default App;

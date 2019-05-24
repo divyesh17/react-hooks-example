@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import '../App.css';
-import loadingGif from '../loader.gif';
+import '../assets/App.css';
+import loadingGif from '../assets/loader.gif';
 
 const useWikipedia = (initUrl) => {
   const [summary, setSummary] = useState('');
@@ -36,7 +36,7 @@ const App = () => {
   const { summary, isLoading, errMsg, setUrl } = useWikipedia('https://en.wikipedia.org/api/rest_v1/page/summary/india');
 
   const handleQueryChange = e => setQuery(e.target.value);
-  const handleSearch = () => setUrl(`https://en.wikipedia.org/api/rest_v1/page/summary/${query}`)
+  const handleSearch = () => setUrl(`https://en.wikipedia.org/api/rest_v1/page/summary/${query}`);
 
   return (
     <div className="articleContainer">
